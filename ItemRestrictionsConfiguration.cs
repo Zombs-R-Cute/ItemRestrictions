@@ -4,17 +4,22 @@ using Rocket.API;
 
 namespace Zombs_R_CuteItemRestrictions
 {
-    public class ItemRestrictionsConfiguration:IRocketPluginConfiguration
+    public class ItemRestrictionsConfiguration : IRocketPluginConfiguration
     {
-        [XmlArrayItem(ElementName = "Item")]
-        public List<ushort> Items;
+        public bool LogPickupOfItems;
+        public bool LogPickupOfAllItems;
+
+        [XmlArray(ElementName = "PreventPossessionOfTheseItems"), XmlArrayItem(ElementName = "Item")]
+        public HashSet<ushort> PreventPossessionOfTheseItems;
 
         public bool AllowAdminToPossess;
-        
+
         public void LoadDefaults()
         {
             AllowAdminToPossess = true;
-            Items = new List<ushort>() { 1510 }; // 1510 = chewing gum
+            LogPickupOfItems = false;
+            LogPickupOfAllItems = false;
+            PreventPossessionOfTheseItems = new HashSet<ushort>() {1510}; // 1510 = Chewing Gum
         }
     }
 }
