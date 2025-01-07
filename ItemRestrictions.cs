@@ -20,7 +20,13 @@ namespace Zombs_R_CuteItemRestrictions
             Logger.Log(itemSet.Count + " Blacklisted Items:");
             foreach (var item in itemSet)
             {
-                Logger.Log("id: " + item + " - " + UnturnedItems.GetItemAssetById(item).itemName);
+                var asset = UnturnedItems.GetItemAssetById(item);
+                if (asset != null)
+                {
+                    Logger.Log("id: " + item + " - " + asset.itemName);
+                    continue;
+                }
+                Logger.Log("id: " + item + " - * Not in this map");
             }
            
             U.Events.OnPlayerConnected += player =>
