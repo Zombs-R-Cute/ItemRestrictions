@@ -26,13 +26,21 @@ namespace Zombs_R_CuteItemRestrictions
                     Logger.Log("id: " + item + " - " + asset.itemName);
                     continue;
                 }
-                Logger.Log("id: " + item + " - * Not in this map");
+                Logger.Log("id: " + item + " - * Unable to get item name by id");
             }
            
             U.Events.OnPlayerConnected += player =>
             {
                 player.Player.inventory.onInventoryAdded +=
                     (page, index, jar) => ONInventoryAdded(page, index, jar, player);
+                
+                var itemJar = player.Player.inventory.getItem(0, 0); //Primary
+                if (itemJar != null)
+                    ONInventoryAdded(0,0, itemJar, player);
+
+                itemJar = player.Player.inventory.getItem(1, 0); //Secondary
+                if (itemJar != null)
+                    ONInventoryAdded(1,0, itemJar, player);
             };
 
             U.Events.OnPlayerDisconnected += player =>
